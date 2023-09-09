@@ -13,7 +13,6 @@ import { FontAwesome } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
 
 const Navbar = () => {
-  const cartCount = useSelector((state) => state.cart.cartCount);
   const [restaurantDetails, setRestaurantDetails] = useState([]);
   useEffect(() => {
     const fetch = async () => {
@@ -26,6 +25,14 @@ const Navbar = () => {
   }, []);
 
   const restaurantName = restaurantDetails?.[0]?.restaurant_name;
+
+  const count = useSelector((state) => state.cart.items)
+  const totalItemCount = count.reduce((total, item) => total + item.count, 0);
+
+  const categoryCount = count.length;
+
+
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -46,7 +53,7 @@ const Navbar = () => {
             style={styles.icon}
           />
           <View style={styles.cartCountContainer}>
-            <Text style={styles.cartCount}>{cartCount}</Text>
+            <Text style={styles.cartCount}>{totalItemCount}</Text>
           </View>
         </View>
       </View>

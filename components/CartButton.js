@@ -1,27 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { incrementCart, decrementCart } from "../redux/cartSlice";
 
 const CartButton = (props) => {
+  const dispatch = useDispatch();
   const [count, setCount] = useState(0);
   const [text, setText] = useState("");
-  const cartCount = useSelector((state) => state.cart.cartCount);
-  const dispatch = useDispatch();
+
+  const countt = useSelector((state) => state.cart.items); 
+
+  const currentDishId = props.item.dish_id;
+  const currentDishCount =
+    countt.find((item) => item.dishId === currentDishId)?.count || 0;
 
   const handleAddToCart = (incrementValue) => {
     if (count === 0 && incrementValue === -1) {
       setText("");
     } else {
       if (incrementValue === 1) {
-        dispatch(incrementCart(props.item.id));
+        dispatch(incrementCart(props?.item?.dish_id));
       } else {
-        dispatch(decrementCart(props.item.id));
+        dispatch(decrementCart(props?.item?.dish_id));
       }
       setCount(count + incrementValue);
       setText("Customization available");
     }
   };
+
+  useEffect(() => {
+    setCount(currentDishCount);
+    if (currentDishCount >= 1) {
+      setText("Customization available");
+    } else {
+      setText("");
+    }
+  }, [props.category, count]);
 
   return (
     <>

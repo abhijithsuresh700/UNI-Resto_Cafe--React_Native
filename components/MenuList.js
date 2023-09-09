@@ -66,6 +66,7 @@ const MenuList = () => {
       </View>
       <CategoryDishes
         dishes={dishes ? dishes : details?.table_menu_list[0]?.category_dishes}
+        category={dishes.length > 0 ? dishes : list[0]?.menu_category}
       />
     </>
   );

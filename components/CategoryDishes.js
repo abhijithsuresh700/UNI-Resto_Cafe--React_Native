@@ -4,6 +4,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import CartButton from "./CartButton";
 
 const CategoryDishes = (props) => {
+
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
       {props.dishes === undefined
@@ -39,7 +40,7 @@ const CategoryDishes = (props) => {
                   </Text>
                   <View style={styles.cartButtonContainer}>
                     {item.dish_Availability ? (
-                      <CartButton item={item} cartCount={props.setCart} />
+                      <CartButton item={item} cartCount={props.setCart} category={props.category}/>
                     ) : (
                       <Text style={styles.notAvailableText}>Not Available</Text>
                     )}
